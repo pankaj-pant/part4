@@ -15,7 +15,27 @@ const totalLikes = (blogs) => {
     sum
 }
 
+const favoriteBlog = (blogs) => {
+  let highestLikes = 0
+  let blogIndex = 0
+  blogs.map(function(b, index){
+    if(b.likes > highestLikes){
+      highestLikes = b.likes
+      blogIndex = index
+    }
+  })
+
+  const answer = {
+    title: blogs[blogIndex].title,
+    author: blogs[blogIndex].author,
+    likes: blogs[blogIndex].likes
+  }
+
+  return answer
+}
+
 module.exports = {
   dummy,
-  totalLikes
+  totalLikes,
+  favoriteBlog
 }
