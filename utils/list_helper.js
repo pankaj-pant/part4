@@ -68,9 +68,49 @@ const mostBlogs = (blogs) => {
   return answer
 }
 
+const mostLikes = (blogs) => {
+  function groupBy(objectArray, property) {
+    return objectArray.reduce(function (acc, obj) {
+      var key = obj[property]
+      if (!acc[key]) {
+        acc[key] = []
+      }
+      acc[key].push(obj)
+      return acc
+    }, {})
+  }
+
+  const result = groupBy(blogs, 'author')
+
+  const transformedResult = Object.entries(result)
+
+  let highestLikes = 0
+  let numberIndex = 0
+  let totalLikes = 0
+
+  transformedResult.map((a, index) => {
+    a[1].map((o) => {
+      totalLikes = totalLikes + o.likes
+    })
+    if(totalLikes > highestLikes) {
+      highestLikes = totalLikes
+      numberIndex = index
+      totalLikes = 0
+    }
+  })
+
+  const answer = {
+    author: transformedResult[numberIndex][0],
+    likes: highestLikes
+  }
+
+  return answer
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
